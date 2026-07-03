@@ -731,6 +731,11 @@ sudo mkdir -p /mnt/nfs
 #Monta o volume LOCALMENTE (Sem passar pela rede)
 mount --bind /srv/nfs /mnt/nfs
 
+sudo systemctl daemon-reload
+
+# Verifica se montou
+findmnt /mnt/nfs
+
 #Configura a montagem automática no Boot
 echo "/srv/nfs /mnt/nfs none bind 0 0" | sudo tee -a /etc/fstab
 ```
