@@ -726,13 +726,22 @@ sudo grep -qF "$EXPORT_LINE" /etc/exports || echo "$EXPORT_LINE" | sudo tee -a /
 # Aplica e verifica
 sudo exportfs -ra
 sudo exportfs -v
+
+sudo mkdir -p /mnt/nfs
+#Monta o volume LOCALMENTE (Sem passar pela rede)
+mount --bind /srv/nfs /mnt/nfs
+
+#Configura a montagem automática no Boot
+echo "/srv/nfs /mnt/nfs none bind 0 0" | sudo tee -a /etc/fstab
 ```
 
-### Clientes NFS (kvm2, kvm4 e também no kvm8)
+### Montagem do volume compartilhado
+Todos os nós precisam montar a pasta `/mnt/nfs` para garantir que o caminho seja
+idêntico em todo o cluster. 
+- Todos os **nodes clients** a monta via rede (passando pela VPN)
+- O **server node** a monta via bind mount (Acesso local ao diretório, e o tráfego não passa na rede). 
 
-Todos os nós precisam montar essa pasta. Sim, inclusive o `kvm8` monta a própria
-pasta via rede (loopback/VPN) para garantir que o caminho `/mnt/nfs` seja
-idêntico em todo o cluster.
+### Clientes NFS (kvm2, kvm4 e também no kvm8)
 
 ```bash
 # Instala o cliente
