@@ -741,7 +741,7 @@ idêntico em todo o cluster.
 - Todos os **nodes clients** a monta via rede (passando pela VPN)
 - O **server node** a monta via bind mount (Acesso local ao diretório, e o tráfego não passa na rede). 
 
-### Clientes NFS (kvm2, kvm4 e também no kvm8)
+### Clientes NFS (kvm2, kvm4)
 
 ```bash
 # Instala o cliente
